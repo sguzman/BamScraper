@@ -229,17 +229,23 @@ object Main{
     writeHttp()
 
     locally {
-      itemCache.links.par.map{a =>
+      itemCache.links.par.foreach{a =>
         val show = itemCache.cache(a)
         val eps = show.eps.map(b => itemCache.episode(b))
-        storeCache = storeCache.addShows(a, Show(
+        val finalEps = show.eps.zip(eps).map(b => FinalEp(Some(b._1), Some(b._2)))
+
+        val finalEp = FinalEp()
+        storeCache = storeCache.addShows((a, FinalShow(
           show.title,
           show.img,
+          show.desc,
           show.genres,
-          eps
-        ))
+          finalEps
+        )))
       }
     }
+
+    writeStore()
 
     scribe.info("done")
   }
