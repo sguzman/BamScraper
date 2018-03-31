@@ -27,7 +27,10 @@ object Main{
   def writeHttp(): Unit = {
     val file = new File("./http.data")
     val out = new FileOutputStream(file)
+
+    scribe.info("Writing http cache to disk...")
     httpCache.writeTo(out)
+    scribe.info("Finished writing http cache to disk...")
     out.close()
   }
 
@@ -43,7 +46,28 @@ object Main{
   def writeItem(): Unit = {
     val file = new File("./item.data")
     val out = new FileOutputStream(file)
+
+    scribe.info("Writing item cache to disk...")
     itemCache.writeTo(out)
+    scribe.info("Finished writing item cache to disk...")
+    out.close()
+  }
+
+  var storeCache = {
+    val file = new File("./store.data")
+    if (!file.exists) file.createNewFile()
+    val in = new FileInputStream("./store.data")
+    val cache = items.Store.parseFrom(in)
+    in.close()
+    cache
+  }
+
+  def writeStore(): Unit = {
+    val file = new File("./store.data")
+    val out = new FileOutputStream(file)
+    scribe.info("Writing data store to disk...")
+    storeCache.writeTo(out)
+    scribe.info("Finshed writing data store to disk...")
     out.close()
   }
 
@@ -131,6 +155,8 @@ object Main{
   }) (f)
 
   def main(args: Array[String]): Unit = {
+    scribe.info(s"Starting main with $args args")
+
     locally {
       val seed = "https://www.animebam.net/series"
       val select = "div.container > div.row > div.col-md-6 > div.panel.panel-default > div.panel-footer > ul.series_alpha > li > a[href]"
