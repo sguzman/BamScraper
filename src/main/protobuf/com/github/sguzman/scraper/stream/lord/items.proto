@@ -30,6 +30,19 @@ message Items {
     map<string, Ep> episode = 3;
 }
 
+message FinalEp {
+    Episode meta = 1;
+    Ep links = 2;
+}
+
+message FinalShow {
+    string title = 1;
+    string img = 2;
+    string desc = 3;
+    repeated string genres = 4;
+    repeated FinalEp eps = 5;
+}
+
 message Store {
-    map<string, Show> shows = 1;
+    map<string, FinalShow> shows = 1;
 }
