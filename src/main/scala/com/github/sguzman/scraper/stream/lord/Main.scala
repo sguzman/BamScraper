@@ -225,6 +225,22 @@ object Main{
         }
     }
 
+    writeItem()
+    writeHttp()
+
+    locally {
+      itemCache.links.par.map{a =>
+        val show = itemCache.cache(a)
+        val eps = show.eps.map(b => itemCache.episode(b))
+        storeCache = storeCache.addShows(a, Show(
+          show.title,
+          show.img,
+          show.genres,
+          eps
+        ))
+      }
+    }
+
     scribe.info("done")
   }
 }
