@@ -231,7 +231,7 @@ object Main{
     locally {
       itemCache.links.par.foreach{a =>
         val show = itemCache.cache(a)
-        val eps = show.eps.map(b => itemCache.episode(b.link))
+        val eps = show.eps.map(b => itemCache.episode(s"https://www.animebam.net${b.link}"))
         val finalEps = show.eps.zip(eps).map(b => FinalEp(Some(b._1), Some(b._2)))
 
         val finalEp = FinalEp()
