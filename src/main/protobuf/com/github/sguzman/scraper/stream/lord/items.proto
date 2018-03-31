@@ -31,5 +31,5 @@ message Items {
 }
 
 message Store {
-    repeated Show shows = 1;
+    map<string, Show> shows = 1;
 }
