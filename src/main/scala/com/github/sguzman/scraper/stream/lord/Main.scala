@@ -225,9 +225,6 @@ object Main{
         }
     }
 
-    writeItem()
-    writeHttp()
-
     locally {
       itemCache.links.par.foreach{a =>
         val show = itemCache.cache(s"https://www.animebam.net$a")
